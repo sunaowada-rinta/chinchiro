@@ -85,8 +85,8 @@ body::before {
 
 /* 器（浅い白っぽいボウル） */
 .bowl {
-  width: 280px;
-  height: 120px;
+  width: 300px;
+  height: 130px;
   background: linear-gradient(175deg, #f2f0ec 0%, var(--bowl) 40%, #d8d6d2 100%);
   border-radius: 50% 50% 48% 48% / 25% 25% 75% 75%;
   box-shadow:
@@ -102,90 +102,88 @@ body::before {
 }
 
 .bowl-inner {
-  width: 240px;
-  height: 85px;
+  width: 260px;
+  height: 95px;
   background: linear-gradient(180deg, #ebe9e5 0%, var(--bowl-inner) 100%);
   border-radius: 50% 50% 48% 48% / 30% 30% 70% 70%;
   box-shadow: inset 0 4px 16px rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   position: relative;
   z-index: 1;
 }
 
 .bowl.rolling {
-  animation: bowlShake 0.12s ease-in-out infinite;
+  animation: bowlShake 0.1s ease-in-out infinite;
 }
 
 @keyframes bowlShake {
-  0%, 100% { transform: rotate(-1.5deg); }
-  50% { transform: rotate(1.5deg); }
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
 }
 
-/* サイコロ（白・黒 pip・1の目は赤） */
+/* 器の中（サイコロが跳ねるエリア） */
+.bowl-inner.rolling .dice {
+  transition: none;
+}
+
+/* サイコロ（しっかりした立体・器の中で振る） */
 .dice {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(145deg, #fff 0%, #f5f5f5 100%);
-  border-radius: 8px;
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(145deg, #fff 0%, #f0eeea 50%, #e8e6e2 100%);
+  border-radius: 6px;
   box-shadow:
-    inset 1px 1px 2px rgba(255, 255, 255, 0.9),
-    inset -1px -1px 2px rgba(0, 0, 0, 0.06),
-    2px 4px 10px rgba(0, 0, 0, 0.12);
+    inset 2px 2px 4px rgba(255, 255, 255, 0.95),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.08),
+    3px 3px 0 rgba(0, 0, 0, 0.06),
+    6px 8px 16px rgba(0, 0, 0, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  transition: transform 0.15s ease-out;
 }
 
 .dice .face {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   position: relative;
+}
+
+/* 目のドット共通 */
+.dice .face::before,
+.dice .face::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--dice-dot);
 }
 
 /* 1の目（中央・赤） */
 .dice[data-face="1"] .face::before {
-  content: "";
-  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   background: var(--dice-dot-1);
-  border-radius: 50%;
 }
+.dice[data-face="1"] .face::after { display: none; }
 
 /* 2の目 */
-.dice[data-face="2"] .face::before,
-.dice[data-face="2"] .face::after {
-  content: "";
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: var(--dice-dot);
-  border-radius: 50%;
-}
-.dice[data-face="2"] .face::before { top: 4px; left: 4px; }
-.dice[data-face="2"] .face::after { bottom: 4px; right: 4px; }
+.dice[data-face="2"] .face::before { top: 5px; left: 5px; }
+.dice[data-face="2"] .face::after { bottom: 5px; right: 5px; }
 
 /* 3の目 */
-.dice[data-face="3"] .face::before,
-.dice[data-face="3"] .face::after {
-  content: "";
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: var(--dice-dot);
-  border-radius: 50%;
-}
-.dice[data-face="3"] .face::before { top: 4px; left: 4px; }
-.dice[data-face="3"] .face::after { bottom: 4px; right: 4px; }
+.dice[data-face="3"] .face::before { top: 5px; left: 5px; }
+.dice[data-face="3"] .face::after { bottom: 5px; right: 5px; }
 .dice[data-face="3"] .face {
-  box-shadow: 9px 9px 0 0 var(--dice-dot);
+  box-shadow: 10px 10px 0 0 var(--dice-dot);
 }
 
 /* 4の目 */
@@ -193,31 +191,25 @@ body::before {
 .dice[data-face="4"] .face::after { display: none; }
 .dice[data-face="4"] .face {
   box-shadow:
-    4px 4px 0 0 var(--dice-dot),
-    18px 4px 0 0 var(--dice-dot),
-    4px 18px 0 0 var(--dice-dot),
-    18px 18px 0 0 var(--dice-dot);
+    5px 5px 0 0 var(--dice-dot),
+    21px 5px 0 0 var(--dice-dot),
+    5px 21px 0 0 var(--dice-dot),
+    21px 21px 0 0 var(--dice-dot);
 }
 
 /* 5の目 */
 .dice[data-face="5"] .face::before {
-  content: "";
-  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 6px;
-  height: 6px;
-  background: var(--dice-dot);
-  border-radius: 50%;
 }
 .dice[data-face="5"] .face::after { display: none; }
 .dice[data-face="5"] .face {
   box-shadow:
-    4px 4px 0 0 var(--dice-dot),
-    18px 4px 0 0 var(--dice-dot),
-    4px 18px 0 0 var(--dice-dot),
-    18px 18px 0 0 var(--dice-dot);
+    5px 5px 0 0 var(--dice-dot),
+    21px 5px 0 0 var(--dice-dot),
+    5px 21px 0 0 var(--dice-dot),
+    21px 21px 0 0 var(--dice-dot);
 }
 
 /* 6の目 */
@@ -225,25 +217,12 @@ body::before {
 .dice[data-face="6"] .face::after { display: none; }
 .dice[data-face="6"] .face {
   box-shadow:
-    4px 4px 0 0 var(--dice-dot),
-    18px 4px 0 0 var(--dice-dot),
-    4px 9px 0 0 var(--dice-dot),
-    18px 9px 0 0 var(--dice-dot),
-    4px 18px 0 0 var(--dice-dot),
-    18px 18px 0 0 var(--dice-dot);
-}
-
-.dice.rolling {
-  animation: diceRoll 0.1s ease-in-out infinite;
-}
-
-.dice#dice2.rolling { animation-delay: 0.03s; }
-.dice#dice3.rolling { animation-delay: 0.06s; }
-
-@keyframes diceRoll {
-  0%, 100% { transform: rotate(0deg) scale(1); }
-  25% { transform: rotate(-12deg) scale(1.04); }
-  75% { transform: rotate(12deg) scale(0.96); }
+    5px 5px 0 0 var(--dice-dot),
+    21px 5px 0 0 var(--dice-dot),
+    5px 13px 0 0 var(--dice-dot),
+    21px 13px 0 0 var(--dice-dot),
+    5px 21px 0 0 var(--dice-dot),
+    21px 21px 0 0 var(--dice-dot);
 }
 
 /* 結果 */
@@ -303,20 +282,6 @@ body::before {
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
-}
-
-/* ざわ（右下・半透明・装飾） */
-.zawa {
-  position: absolute;
-  bottom: 1rem;
-  right: 1.25rem;
-  font-size: 2rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.5);
-  text-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
-  letter-spacing: 0.02em;
-  pointer-events: none;
-  user-select: none;
 }
 
 /* Footer */

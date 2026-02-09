@@ -8,9 +8,11 @@
   const ROLL_INTERVAL_MS = 80;
 
   const cup = document.getElementById("cup");
+  const bowlInner = cup.querySelector(".bowl-inner");
   const dice1 = document.getElementById("dice1");
   const dice2 = document.getElementById("dice2");
   const dice3 = document.getElementById("dice3");
+  const diceEls = [dice1, dice2, dice3];
   const resultLabel = document.getElementById("resultLabel");
   const resultDesc = document.getElementById("resultDesc");
   const resultEl = document.getElementById("result");
@@ -86,6 +88,18 @@
     if (yaku.type === "lose") resultEl.classList.add("lose");
   }
 
+  function rand(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function setDiceInBowlTransform(dice, x, y, deg) {
+    dice.style.transform = `translate(${x}px, ${y}px) rotate(${deg}deg)`;
+  }
+
+  function clearDiceTransform(dice) {
+    dice.style.transform = "";
+  }
+
   function rollDice() {
     rollBtn.disabled = true;
     resultLabel.textContent = "…";
@@ -93,14 +107,15 @@
     resultEl.classList.remove("win", "lose");
 
     cup.classList.add("rolling");
-    [dice1, dice2, dice3].forEach((d) => d.classList.add("rolling"));
+    bowlInner.classList.add("rolling");
 
     let count = 0;
     const maxCount = Math.ceil(ROLL_DURATION_MS / ROLL_INTERVAL_MS);
     const intervalId = setInterval(() => {
-      setDiceFace(dice1, randomDice());
-      setDiceFace(dice2, randomDice());
-      setDiceFace(dice3, randomDice());
+      diceEls.forEach((d) => {
+        setDiceFace(d, randomDice());
+        setDiceInBowlTransform(d, rand(-50, 50), rand(-18, 18), rand(0, 360));
+      });
       count++;
       if (count >= maxCount) {
         clearInterval(intervalId);
@@ -108,7 +123,8 @@
         const v2 = Number(dice2.dataset.face);
         const v3 = Number(dice3.dataset.face);
         cup.classList.remove("rolling");
-        [dice1, dice2, dice3].forEach((d) => d.classList.remove("rolling"));
+        bowlInner.classList.remove("rolling");
+        diceEls.forEach(clearDiceTransform);
         const yaku = judgeYaku([v1, v2, v3]);
         showResult(yaku);
         rollBtn.disabled = false;
