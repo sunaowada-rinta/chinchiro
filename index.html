@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1a0f0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>チンチロ - 丁半サイコロ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>チンチロ</h1>
+      <p class="subtitle">丁半</p>
+    </header>
+
+    <main class="main">
+      <div class="cup" id="cup" aria-label="サイコロを振る器">
+        <div class="cup-inner">
+          <div class="dice" id="dice1" data-face="1">
+            <div class="face"></div>
+          </div>
+          <div class="dice" id="dice2" data-face="2">
+            <div class="face"></div>
+          </div>
+          <div class="dice" id="dice3" data-face="3">
+            <div class="face"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result" id="result">
+        <span class="result-label" id="resultLabel">—</span>
+        <span class="result-desc" id="resultDesc"></span>
+      </div>
+
+      <button type="button" class="roll-btn" id="rollBtn" aria-label="サイコロを振る">
+        <span class="roll-btn-text">振る</span>
+      </button>
+    </main>
+
+    <footer class="footer">
+      <button type="button" class="help-btn" id="helpBtn">役一覧</button>
+    </footer>
+  </div>
+
+  <dialog class="modal" id="helpModal" aria-labelledby="modalTitle">
+    <div class="modal-inner">
+      <h2 id="modalTitle">チンチロの役</h2>
+      <ul class="yaku-list">
+        <li><strong>ピンゾロ</strong> 1・1・1 … 最高役</li>
+        <li><strong>ゾロ</strong> 同じ目が3つ（2・2・2 など）</li>
+        <li><strong>シゴロ</strong> 4・5・6 … 強役</li>
+        <li><strong>ヒフミ</strong> 1・2・3 … 即負け</li>
+        <li><strong>通常役</strong> 同じ目が2つ（目で強弱）</li>
+        <li><strong>役なし</strong> 上記以外 … 負け</li>
+      </ul>
+      <button type="button" class="modal-close" id="modalClose">閉じる</button>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
